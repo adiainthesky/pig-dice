@@ -1,0 +1,40 @@
+.container {
+  display: none;
+}
+
+.scores {
+  display: none;
+}
+
+.hold {
+  display: none;
+}
+
+
+
+
+
+/* // $("#roleHold").show();
+// $(".total-score").html(playerOne.score);
+// $(".current-score").html(turnScore);
+
+// const inputtedFirstName = $("input#new-first-name").val(); */
+
+/* 
+
+// internal function "roll"  event.listener.  if else ... if roll -trigger roll fucntion again
+//   (addEventListener)
+//   roll dice (random) 
+
+
+// while(sum <= 100) {
+  
+    
+      
+// }
+// function turn 
+// let sumRoll 
+// for 
+
+
+// stop if player[i] >=100 */
