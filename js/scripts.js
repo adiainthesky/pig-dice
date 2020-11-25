@@ -16,16 +16,8 @@ $(document).ready(function(event) {
     console.log(playerTwo.name);
     
     currentPlayer = playerOne;
-    
-    $(".roll").click(function(){
-      currentPlayer.roll();
-      // console.log(currentPlayer.turnScore);
-    }); 
+    currentPlayer.turn();
 
-    $(".hold").click(function(){
-      currentPlayer.hold();
-      // console.log(currentPlayer.turnScore);
-    }); 
 });
     
 
@@ -60,7 +52,9 @@ Player.prototype.addToTurnScore = function(amount) {
 }
 
 Player.prototype.hold = function() {
-  this.addToTotalScore(this.turnScore);
+  this.addToTotalScore(this.turnScore);  
+  currentPlayer.switchPlayer();
+  console.log("currentPlayer =" + currentPlayer.name);
 
   $(".hold").hide();
   $(".roll").hide();
@@ -75,23 +69,33 @@ Player.prototype.addToTotalScore = function(amount) {
 
 Player.prototype.turn = function() {
   alert("Choose to roll or to hold")
-  // call "switch turn" 
+  $(".hold").show();
+  $(".roll").show();
+  $(".roll").click(function(){
+    currentPlayer.roll();
+  }); 
+
+  $(".hold").click(function(){
+    currentPlayer.hold();
+  }); 
+
+  
 }
 
+Player.prototype.switchPlayer = function() {
+  if(currentPlayer === playerOne) {
+      currentPlayer = playerTwo;
+  }
+  else {
+    currentPlayer = playerOne;
+    alert(currentPlayer.name + ", its your turn now");
+  }
+  console.log("2currentPlayer =" + currentPlayer.name)
+  return currentPlayer;
+  
+}
 
-    //   if 
-    //   choose roll or hold
-    //   if roll ..roll then repeat...
-      
-
-
-
-
-      
-      
-
-
-
+    
 
 
 
