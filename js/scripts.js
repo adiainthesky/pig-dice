@@ -17,7 +17,7 @@ $(document).ready(function(event) {
     currentPlayer = playerOne;
     currentPlayer.turn();
 });
-    
+
 Player.prototype.turn = function() {
   alert("Choose to roll or to hold")
   $(".hold").show();
@@ -27,20 +27,20 @@ Player.prototype.turn = function() {
   }); 
   $(".hold").click(function(){
     currentPlayer.hold();
-    currentPlayer.choice();
   }); 
 }
 
 Player.prototype.roll = function() {
   let dice = Math.floor((Math.random() * 6) + 1);  
   console.log("dice =" + dice)
-  currentPlayer.addToTurnScore(dice);
-  currentPlayer.choice();
-}
-
-Player.prototype.choice = function (){
-  $(".hold").show();
-  $(".roll").show();
+  if(dice === 1) {
+    currentPlayer.addToTurnScore(0);
+    currentPlayer.switchPlayer();
+  }
+  else {
+    currentPlayer.addToTurnScore(dice);
+  }
+  currentPlayer.choiceVisible();
 }
 
 Player.prototype.addToTurnScore = function(amount) {
@@ -48,62 +48,51 @@ Player.prototype.addToTurnScore = function(amount) {
   console.log("turnScore =" + this.turnScore)
 }
 
+Player.prototype.choiceVisible = function (){
+  $(".hold").show();
+  $(".roll").show();
+}
+
 Player.prototype.hold = function() {
   this.addToTotalScore(this.turnScore);  
-  currentPlayer.switchPlayer();
+  this.winCheck();
   console.log("currentPlayer =" + currentPlayer.name);
-  $(".hold").hide();
-  $(".roll").hide();
+  // $(".hold").hide();
+  // $(".roll").hide();
 }
 
 Player.prototype.addToTotalScore = function(amount) {
   this.totalScore += amount;
   this.turnScore = 0;
-  console.log("Player1 totalScore =" + playerOne.totalScore)
-  console.log("Player2 totalScore =" + playerTwo.totalScore)
+  console.log(playerOne.name + "totalScore =" + playerOne.totalScore)
+  console.log(playerTwo.name + "totalScore =" + playerTwo.totalScore)
 }
+
+Player.prototype.winCheck = function() {
+  if (this.totalScore >= 20) {
+    alert("Congrats " + this.name + "!")
+    $(".hold").hide();
+    $(".roll").hide();}
+  else {
+    this.choiceVisible();
+    currentPlayer.switchPlayer();
+  } 
+}
+
 
 Player.prototype.switchPlayer = function() {
   if(currentPlayer === playerOne) {
       currentPlayer = playerTwo;
+      alert(currentPlayer.name + ", it's your turn now");
   }
   else {
     currentPlayer = playerOne;
-    alert(currentPlayer.name + ", its your turn now");
+    alert(currentPlayer.name + ", it's your turn now");
   }
-  console.log("2currentPlayer =" + currentPlayer.name)
-  currentPlayer.choice();
-}
-
-function game(playerOne, playerTwo) {
-  while (playerOne.score < 100 && playerTwo.score < 100) {
-    playerOne.turn(); 
-    console.log(playerOne.score);
-    playerTwo.turn();
-  }
-  if (playerOne.score >= 100) {
-    console.log("Congrats " + playerOne.name + "!")
-  }
-  else {
-    console.log("Congrats " + playerTwo.name + "!");
-  }
+  currentPlayer.choiceVisible();
 }
 
 
-/* $(".roll").click(function(){
-  currentPlayer.roll();
-// make new decision
-});
-
- $(".hold").click(function(){  
-  currentPlayer.hold();
-  // currentPlayer = playerTwo
-});
- */
-// BUSINESS
-
-
-
 
 
     
@@ -114,25 +103,6 @@ function game(playerOne, playerTwo) {
 
 
 
-
-
-    
-    
-
-    
-   /*    turnScore = 0;
-      while  {
-        Player.turn();
-        turnScore += this.roll();
-      } 
-      if ($(".hold").clicked) { 
-        Player.score += this.score
-      }
-    
-    
-
-    function hold
- */
 
 
 
