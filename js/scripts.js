@@ -1,67 +1,120 @@
+function Player(name) {
+  this.name = name;
+  this.turnScore = 0;
+  this.totalScore = 0;
+}
+
+let playerOne;
+let playerTwo;
+let currentPlayer;
+
 $(document).ready(function(event) {
     // event.preventDefault();
-
-    playerOne.name = $(prompt("Player one, please enter your name:")).val();
-    playerTwo.name = $(prompt("Player two, please enter your name:")).val();
-    $(".roll").click(function(){
-      game(playerOne, playerTwo);
-        $(".hold").show();
-    });
+    playerOne = new Player(prompt("Player one, please enter your name:"));
+    playerTwo = new Player(prompt("Player two, please enter your name:"));
+    console.log(playerOne.name);
+    console.log(playerTwo.name);
     
+    currentPlayer = playerOne;
+    
+    $(".roll").click(function(){
+      currentPlayer.roll();
+      // console.log(currentPlayer.turnScore);
+    }); 
+
+    $(".hold").click(function(){
+      currentPlayer.hold();
+      // console.log(currentPlayer.turnScore);
+    }); 
 });
     
-    let playerOne = new Player("");
-    let playerTwo = new Player("");
 
-    function Player(name) {
-      this.name = name;
-      this.score = 0;
-    }
-    
-    function game(playerOne, playerTwo) {
-      
-      while (playerOne.score < 100 && playerTwo.score < 100) {
-        playerOne.turn(); 
-        console.log(playerOne.score);
-        playerTwo.turn();
-      }
-      if (playerOne.score >= 100) {
-        console.log("Congrats " + playerOne.name + "!")
-      }
-      else {
-        console.log("Congrats " + playerTwo.name + "!");
-      }
-    }
 
-    Player.prototype.roll = function() {
-      return Math.floor((Math.random() * 6) + 1);
-      alert(Math.floor((Math.random() * 6) + 1))
-     }
+/* $(".roll").click(function(){
+  currentPlayer.roll();
+// make new decision
+});
 
-    Player.prototype.turn = function() {
-      // let choices = ["roll", "hold"];
-      this.turnScore = 0;
-      let answer;
-      do {
-        answer = prompt("Type yes to roll and no to hold");
-        this.turnScore += this.roll();
-       } while(answer === "yes" || answer === "YES" || answer === "Yes") 
-        alert(this.turnScore);
-        this.score += this.turnScore;
-        prompt("Next player's turn! Type 'yes' to roll or click 'cancel' to hold")
-      }
-      console.log(playerOne.score, playerTwo.score);
+ $(".hold").click(function(){  
+  currentPlayer.hold();
+  // currentPlayer = playerTwo
+});
+ */
+// BUSINESS
 
-      
+Player.prototype.choice = function (){
+  $(".hold").show();
+  $(".roll").show();
+}
+
+Player.prototype.roll = function() {
+  let dice = Math.floor((Math.random() * 6) + 1);  
+  console.log("dice =" + dice)
+  currentPlayer.addToTurnScore(dice);
+  currentPlayer.choice();
+}
+
+Player.prototype.addToTurnScore = function(amount) {
+  this.turnScore += amount;  
+  console.log("turnScore =" + this.turnScore)
+}
+
+Player.prototype.hold = function() {
+  this.addToTotalScore(this.turnScore);
+
+  $(".hold").hide();
+  $(".roll").hide();
+}
+
+Player.prototype.addToTotalScore = function(amount) {
+  this.totalScore += amount;
+  this.turnScore = 0;
+  console.log("totalScore =" + this.totalScore)
+  console.log("2turnScore =" + this.turnScore)
+}
+
+Player.prototype.turn = function() {
+  alert("Choose to roll or to hold")
+  // call "switch turn" 
+}
+
+
     //   if 
     //   choose roll or hold
     //   if roll ..roll then repeat...
       
-    //   while (($(".roll").clicked)) {
-    //     this.turnScore += this.roll();
+
+
+
+
+      
+      
+
+
+
+
+
+
+    // function game(playerOne, playerTwo) {
+      
+    //   while (playerOne.score < 100 && playerTwo.score < 100) {
+    //     playerOne.turn(); 
+    //     console.log(playerOne.score);
+    //     playerTwo.turn();
     //   }
-    //   this.score += this.turnScore;
+    //   if (playerOne.score >= 100) {
+    //     console.log("Congrats " + playerOne.name + "!")
+    //   }
+    //   else {
+    //     console.log("Congrats " + playerTwo.name + "!");
+    //   }
     // }
+
+
+
+
+
+
     
     
 
